@@ -1,18 +1,22 @@
-using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(PlayerInput))]
 public class FigureRotater : MonoBehaviour
 {
+    private static int s_rotateCounter;
     private readonly float _speed = 0.65f;
+    private readonly float _autoRotateTime = 0.65f;
     private float _angle;
     private Quaternion _startRotation;
     private Transform _partToRotate;
     private PlayerInput _playerInput;
     private FigureMerger _figureMerger;
     private List<GameObject> _removedParts = new List<GameObject>();
+    private PartWithCollider[] _partsWithColliders;
 
     public event UnityAction<GameObject> RotationEnded;
 
@@ -20,8 +24,10 @@ public class FigureRotater : MonoBehaviour
     {
         _playerInput = GetComponent<PlayerInput>();
         _figureMerger = GetComponent<FigureMerger>();
+        _partsWithColliders = GetComponentsInChildren<PartWithCollider>();
 
-        foreach (var partWithCollider in GetComponentsInChildren<PartWithCollider>())
+        Debug.Log("Enable : " + _partsWithColliders[0]);
+        foreach (var partWithCollider in _partsWithColliders)
             partWithCollider.ColliderPartClicked += OnPartWithColliderClicked;
 
         _playerInput.MouseUpped += OnMouseUpped;
@@ -30,7 +36,7 @@ public class FigureRotater : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach (var partWithCollider in GetComponentsInChildren<PartWithCollider>())
+        foreach (var partWithCollider in _partsWithColliders)
             partWithCollider.ColliderPartClicked -= OnPartWithColliderClicked;
 
         _playerInput.MouseUpped -= OnMouseUpped;
@@ -82,5 +88,24 @@ public class FigureRotater : MonoBehaviour
         _angle = 0;
         _startRotation = _partToRotate.rotation;
         RotationEnded?.Invoke(_partToRotate.gameObject);
+    }
+
+    public void MixUpParts()
+    {
+        Debug.Log("Mix : " + _partsWithColliders[0]);
+
+        foreach (var part in _partsWithColliders)
+        {
+            RandomRotate(GetParent(part.transform));
+        }
+    }
+
+    private void RandomRotate(Transform partToRotate)
+    {
+        var angle = s_rotateCounter % 2 == 0 ? Random.Range(-90, 0) : Random.Range(0, 90);
+        s_rotateCounter++;
+
+        partToRotate.DORotate(new Vector3(partToRotate.rotation.x,
+            partToRotate.rotation.y + angle, partToRotate.rotation.z), _autoRotateTime);
     }
 }
