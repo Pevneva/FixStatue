@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class FigureRotater : MonoBehaviour
 {
     private static int s_rotateCounter;
-    private readonly float _speed = 0.65f;
+    private readonly float _speed = 1f;
     private readonly float _autoRotateTime = 0.65f;
     private float _angle;
     private Quaternion _startRotation;

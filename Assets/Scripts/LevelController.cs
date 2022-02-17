@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 
 public class LevelController : MonoBehaviour
 {
-    // [SerializeField] private List<GameObject> _figures;
     [SerializeField] private List<GameObject> _figureTemplates;
     [SerializeField] private Transform _createPoint;
     [SerializeField] private Transform _figuresContainer;
@@ -18,6 +17,7 @@ public class LevelController : MonoBehaviour
     private readonly float _delayBeforeNewLevel = 2;
     private readonly float _fallingTime = 2;
     private readonly float _offsetY = 5;
+    private readonly float _endLevelDelay = 0.5f;
     private GameObject _currentFigure;
     private int _currentIndex;
     private FigureRotater _figureRotater;
@@ -74,12 +74,20 @@ public class LevelController : MonoBehaviour
     {
         if (_currentIndex < _figureTemplates.Count - 1)
         {
-            Destroy(_currentFigure, 0.5f);
-            ExecuteLevel(++_currentIndex);
+            StartCoroutine(EndLevel(_endLevelDelay));
+            // Destroy(_currentFigure, _destroyDelay);
+            // ExecuteLevel(++_currentIndex);
         }
         else
         {
             Debug.Log("Game Completed");
         }
+    }
+
+    private IEnumerator EndLevel(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(_currentFigure);
+        ExecuteLevel(++_currentIndex);       
     }
 }
