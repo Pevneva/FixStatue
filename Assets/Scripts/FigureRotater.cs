@@ -85,6 +85,9 @@ public class FigureRotater : MonoBehaviour
 
     private void EndRotation()
     {
+        if (_partToRotate == null)
+            return;
+        
         _angle = 0;
         _startRotation = _partToRotate.rotation;
         RotationEnded?.Invoke(_partToRotate.gameObject);

@@ -32,7 +32,6 @@ public class FigureChecker : MonoBehaviour
 
     private void OnRotationEnded(GameObject rotatedFigure)
     {
-        Debug.Log("On RE");
         var _neighbors = _neighboringRotateParts.Except(_neighboringRotateParts
             .Where(p => p == rotatedFigure)).ToList();
 

@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public class LevelController : MonoBehaviour
 {
+    [SerializeField] private Player _player;
     [SerializeField] private List<GameObject> _figureTemplates;
     [SerializeField] private Transform _createPoint;
     [SerializeField] private Transform _figuresContainer;
@@ -16,8 +17,11 @@ public class LevelController : MonoBehaviour
 
     private readonly float _delayBeforeNewLevel = 2;
     private readonly float _fallingTime = 2;
+    private readonly float _shakingTime = 0.15f;
     private readonly float _offsetY = 5;
+    private readonly float _miniOffsetY = 0.05f;
     private readonly float _endLevelDelay = 0.5f;
+    private readonly int _reward = 50;
     private GameObject _currentFigure;
     private int _currentIndex;
     private FigureRotater _figureRotater;
@@ -37,7 +41,7 @@ public class LevelController : MonoBehaviour
         InitRandomBackground();
         CreateFigure();
         AnimateFigure();
-        StartCoroutine(StartMixing(_fallingTime + 0.25f));
+        StartCoroutine(StartMixing(_fallingTime + _shakingTime + 0.25f));
     }
 
     private void InitRandomBackground()
@@ -52,11 +56,15 @@ public class LevelController : MonoBehaviour
         _currentFigure = Instantiate(_figureTemplates[_currentIndex], _createPoint.position, Quaternion.identity, _figuresContainer);
         _figureRotater = _currentFigure.GetComponent<FigureRotater>();
         _currentFigure.GetComponent<FigureChecker>().LevelCompleted += OnLevelCompleted;
-    }    
-    
+        _currentFigure.GetComponent<FigureMerger>().FigureMerged += OnFigureMerged;
+    }
+
     private void AnimateFigure()
     {
-        _currentFigure.transform.DOMove(_currentFigure.transform.position - new Vector3(0, _offsetY, 0), _fallingTime);
+        Sequence animateFigure = DOTween.Sequence();
+        animateFigure.Append(_currentFigure.transform.DOMove(_currentFigure.transform.position - new Vector3(0, _offsetY, 0), _fallingTime).SetEase(Ease.InQuad));
+        animateFigure.Append(_currentFigure.transform.DOMove(_currentFigure.transform.position - new Vector3(0,_offsetY + _miniOffsetY, 0), _shakingTime/2).SetEase(Ease.InBounce));
+        animateFigure.Append(_currentFigure.transform.DOMove(_currentFigure.transform.position - new Vector3(0, _offsetY, 0), _shakingTime/2).SetEase(Ease.InQuad));
     }
     
     private IEnumerator StartMixing(float delay)
@@ -75,8 +83,6 @@ public class LevelController : MonoBehaviour
         if (_currentIndex < _figureTemplates.Count - 1)
         {
             StartCoroutine(EndLevel(_endLevelDelay));
-            // Destroy(_currentFigure, _destroyDelay);
-            // ExecuteLevel(++_currentIndex);
         }
         else
         {
@@ -89,5 +95,11 @@ public class LevelController : MonoBehaviour
         yield return new WaitForSeconds(delay);
         Destroy(_currentFigure);
         ExecuteLevel(++_currentIndex);       
+    }
+    
+    
+    private void OnFigureMerged(GameObject arg0)
+    {
+        _player.AddStars(_reward);
     }
 }
