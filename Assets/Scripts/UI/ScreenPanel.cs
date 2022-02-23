@@ -8,6 +8,7 @@ public class ScreenPanel : MonoBehaviour
 {
     [SerializeField] private TMP_Text _starAmount;
     [SerializeField] private Player _player;
+    [SerializeField] private RectTransform _targetStarImage;
 
     private float _countTime = 2.1f;
     private bool _isCounting;
@@ -15,6 +16,8 @@ public class ScreenPanel : MonoBehaviour
     private int _addedStars;
     private float _tempAddedStars;
     private float _interpolationValue = 0.0f;
+
+    public RectTransform TargetStarImage => _targetStarImage;
     
     private void Start()
     {
@@ -32,19 +35,11 @@ public class ScreenPanel : MonoBehaviour
         _startStars = _player.Stars - addedValue;
         _addedStars = addedValue;
         
-        Debug.Log(" _addedStars : " + _addedStars);
-        Debug.Log(" _startStars : " + _startStars);
-        Debug.Log(" result : " + (_startStars + _addedStars));
+        // Debug.Log(" _addedStars : " + _addedStars);
+        // Debug.Log(" _startStars : " + _startStars);
+        // Debug.Log(" result : " + (_startStars + _addedStars));
         
         Invoke(nameof(StartCounting), 1);
-        
-        // if (Int32.TryParse(_starAmount.text, out _startStars))
-        // {
-        //     _starAmount.text = addedValue.ToString();
-        //     _addedStars = addedValue;
-        //     
-        //     Invoke(nameof(StartCounting), 1);
-        // }
     }
 
     private void StartCounting()
@@ -61,9 +56,9 @@ public class ScreenPanel : MonoBehaviour
             _tempAddedStars = Mathf.Lerp(_tempAddedStars, _startStars + _addedStars, _interpolationValue);
             _starAmount.text = Mathf.Round(_tempAddedStars).ToString();
 
-            _interpolationValue += 1.25f * Time.deltaTime;
+            _interpolationValue += 1.5f * Time.deltaTime;
 
-            if (_interpolationValue > 1)
+            if (Mathf.Round(_tempAddedStars) == _startStars + _addedStars)
             {
                 _isCounting = false;
                 _interpolationValue = 0;
