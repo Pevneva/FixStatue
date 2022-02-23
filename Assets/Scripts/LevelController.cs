@@ -14,6 +14,8 @@ public class LevelController : MonoBehaviour
     [SerializeField] private Transform _figuresContainer;
     [SerializeField] private List<Material> _backMaterials;
     [SerializeField] private GameObject _background;
+    [SerializeField] private RectTransform _starIcon;
+    [SerializeField] private RectTransform _starUiContainer;
 
     private readonly float _delayBeforeNewLevel = 2;
     private readonly float _endLevelDelay = 3f;
@@ -55,7 +57,7 @@ public class LevelController : MonoBehaviour
     private void SetFigure()
     {
         _currentFigure = Instantiate(_figureTemplates[_currentIndex], _createPoint.position, Quaternion.identity, _figuresContainer);
-        _currentFigure.Init(_player);
+        _currentFigure.Init(_player, _starUiContainer, _starIcon);
         
         _currentFigure.GetComponent<FigureChecker>().LevelCompleted += OnLevelCompleted;
         

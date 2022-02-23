@@ -35,10 +35,6 @@ public class ScreenPanel : MonoBehaviour
         _startStars = _player.Stars - addedValue;
         _addedStars = addedValue;
         
-        // Debug.Log(" _addedStars : " + _addedStars);
-        // Debug.Log(" _startStars : " + _startStars);
-        // Debug.Log(" result : " + (_startStars + _addedStars));
-        
         Invoke(nameof(StartCounting), 1);
     }
 
@@ -51,7 +47,6 @@ public class ScreenPanel : MonoBehaviour
     {
         if (_isCounting)
         {
-            Debug.Log("_interpolationValue : " + _interpolationValue);
             _tempAddedStars = _startStars;
             _tempAddedStars = Mathf.Lerp(_tempAddedStars, _startStars + _addedStars, _interpolationValue);
             _starAmount.text = Mathf.Round(_tempAddedStars).ToString();
