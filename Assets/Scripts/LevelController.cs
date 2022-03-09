@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,15 +16,9 @@ public class LevelController : MonoBehaviour
     [SerializeField] private RectTransform _starUiContainer;
 
     private readonly float _delayBeforeNewLevel = 2;
-    private readonly float _endLevelDelay = 3f;
-    // private readonly float _fallingTime = 2;
-    // private readonly float _shakingTime = 0.15f;
-    // private readonly float _offsetY = 4.75f;
-    // private readonly float _miniOffsetY = 0.05f;
+    private readonly float _delayBeforeEndLevel = 3f;
     private Figure _currentFigure;
     private int _currentIndex;
-    // private FigureRotater _figureRotater;
-    // private FigureAnimator _figureAnimator;
 
     private void Start()
     {
@@ -42,9 +34,6 @@ public class LevelController : MonoBehaviour
     {
         InitRandomBackground();
         SetFigure();
-        // AnimateFigure();
-        // StartCoroutine(StartMixing(_fallingTime + _shakingTime + 0.25f));
-        // StartCoroutine(StartMixing(2.15f + 0.25f));
     }
 
     private void InitRandomBackground()
@@ -58,38 +47,16 @@ public class LevelController : MonoBehaviour
     {
         _currentFigure = Instantiate(_figureTemplates[_currentIndex], _createPoint.position, Quaternion.identity, _figuresContainer);
         _currentFigure.Init(_player, _starUiContainer, _starIcon);
-        
         _currentFigure.GetComponent<FigureChecker>().LevelCompleted += OnLevelCompleted;
-        
-        // _currentFigure.gameObject.GetComponent<FigureAnimator>().Animate();
-        // _figureRotater = _currentFigure.gameObject.GetComponent<FigureRotater>();
-        // _figureAnimator = _currentFigure.gameObject.GetComponent<FigureAnimator>();
-        // _currentFigure.GetComponent<FigureMerger>().FigureMerged += OnFigureMerged;
     }
 
-    // private void AnimateFigure()
-    // {
-    //     Sequence animateFigure = DOTween.Sequence();
-    //     animateFigure.Append(_currentFigure.transform.DOMove(_currentFigure.transform.position - new Vector3(0, _offsetY, 0), _fallingTime).SetEase(Ease.InQuad));
-    //     animateFigure.Append(_currentFigure.transform.DOMove(_currentFigure.transform.position - new Vector3(0,_offsetY + _miniOffsetY, 0), _shakingTime/2).SetEase(Ease.InBounce));
-    //     animateFigure.Append(_currentFigure.transform.DOMove(_currentFigure.transform.position - new Vector3(0, _offsetY, 0), _shakingTime/2).SetEase(Ease.InQuad));
-    // }
-    // private IEnumerator StartMixing(float delay)
-    // {
-    //     yield return new WaitForSeconds(delay);
-    //     MixUpPartsFigure();
-    // }
-    //
-    // private void MixUpPartsFigure()
-    // {
-    //     _figureRotater.MixUpParts();
-    // }
-
-    private void OnLevelCompleted()
+    private void OnLevelCompleted(GameObject mergedPart, Animator animator)
     {
         if (_currentIndex < _figureTemplates.Count - 1)
         {
-            StartCoroutine(EndLevel(_endLevelDelay));
+            _currentFigure.AddStars(_currentFigure.LevelReward, mergedPart);
+            animator.enabled = true;
+            StartCoroutine(EndLevel(_delayBeforeEndLevel));
         }
         else
         {
@@ -103,9 +70,4 @@ public class LevelController : MonoBehaviour
         Destroy(_currentFigure.gameObject);
         ExecuteLevel(++_currentIndex);       
     }
-    
-    // private void OnFigureMerged(GameObject arg0)
-    // {
-    //     _player.AddStars(_reward);
-    // }
 }

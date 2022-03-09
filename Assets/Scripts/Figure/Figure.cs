@@ -1,23 +1,24 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(FigureAnimator), typeof(FigureRotater))]
-[RequireComponent(typeof(FigureMerger))]
+[RequireComponent(typeof(FigureMerger),typeof(FigureChecker))]
 public class Figure : MonoBehaviour
 {
-    // [SerializeField] private GameObject _figure;
     [SerializeField] private int _subLevelReward;
     [SerializeField] private int _levelReward;
-    
+
+    private readonly float _delayBeforMixing = 0.25f;
     private FigureAnimator _figureAnimator;
     private FigureRotater _figureRotater;
     private FigureMerger _figureMerger;
+    private FigureChecker _figureChecker;
     private StarsHandler _starsHandler;
     private Player _player;
     private RectTransform _starIcon;
     private RectTransform _uiStarContainer;
+
+    public int LevelReward => _levelReward;
 
     private void OnEnable()
     {
@@ -25,10 +26,11 @@ public class Figure : MonoBehaviour
         _figureAnimator = GetComponent<FigureAnimator>();
         _figureRotater = GetComponent<FigureRotater>();
         _figureMerger = GetComponent<FigureMerger>();
+        _figureChecker = GetComponent<FigureChecker>();
         _starsHandler = GetComponentInChildren<StarsHandler>();
         
         _figureAnimator.Fall();
-        StartCoroutine(StartMixing(ParamsController.Figure.FallingTime + ParamsController.Figure.ShakingTime + 0.25f));
+        StartCoroutine(StartMixing(ParamsController.Figure.FallingTime + ParamsController.Figure.ShakingTime + _delayBeforMixing));
     }
 
     public void Init(Player player, RectTransform starIcon, RectTransform uiStarContainer)
@@ -41,11 +43,16 @@ public class Figure : MonoBehaviour
     
     private void OnFigureMerged(GameObject mergedPart)
     {
-        float offsetY = 0.15f;
-        _player.AddStars(_subLevelReward);
-        _figureAnimator.ShowStarsEffect(mergedPart.transform.position.y + offsetY, _starIcon, _uiStarContainer);
+        AddStars(_subLevelReward, mergedPart);
+        _figureMerger.FigureMerged -= OnFigureMerged;
     }
-    
+
+    public void AddStars(int reward, GameObject mergedPart)
+    {
+        _player.AddStars(reward);
+        _figureAnimator.ShowStarsEffect(mergedPart, _starIcon, _uiStarContainer);          
+    }
+
     private IEnumerator StartMixing(float delay)
     {
         yield return new WaitForSeconds(delay);

@@ -54,10 +54,7 @@ public class StarsHandler : MonoBehaviour
         rectTransform.localPosition = localPointInRec;
         rectTransform.localScale = _scaleFactor * new Vector3(1, 1, 1);
         rectTransform.localRotation = Quaternion.Euler(rectTransform.localRotation.x, rectTransform.localRotation.y, rectTransform.localRotation.z + 15);
-
-        // var targetScreenPosioion = RectTransformUtility.l
-        rectTransform.DOLocalMove(_target.localPosition, ParamsController.Star.FlyingTime); //todo 
-        // rectTransform.DOLocalMove(new Vector2(0, 885.5f), ParamsController.Star.FlyingTime); //todo 
+        rectTransform.DOLocalMove(_target.localPosition, ParamsController.Star.FlyingTime);  
         StartCoroutine(WaitBeforeDoPulse(ParamsController.Star.FlyingTime - 0.35f));
     }
 

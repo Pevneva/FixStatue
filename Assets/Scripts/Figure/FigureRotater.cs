@@ -7,8 +7,9 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(PlayerInput))]
 public class FigureRotater : MonoBehaviour
 {
+    [SerializeField] private float _speed = 3f;
+
     private static int s_rotateCounter;
-    private readonly float _speed = 1f;
     private readonly float _autoRotateTime = 0.65f;
     private float _angle;
     private Quaternion _startRotation;
@@ -45,7 +46,6 @@ public class FigureRotater : MonoBehaviour
 
     private void OnFigureMerged(GameObject mergedFigure)
     {
-        Debug.Log("AAA Removed figure : " + mergedFigure);
         _removedParts.Add(mergedFigure);
     }
 

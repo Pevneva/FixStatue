@@ -47,9 +47,14 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            ResetDirections();
-            MouseUpped?.Invoke();
+            ResetStarData();
         }
+    }
+
+    private void ResetStarData()
+    {
+        ResetDirections();
+        MouseUpped?.Invoke();
     }
 
     private void TrySetDirection()
@@ -65,6 +70,8 @@ public class PlayerInput : MonoBehaviour
                 else
                     _isLeftDirection = true;
             }
+            
+            // Invoke(nameof(ResetStarData), 0.5f);
         }
     }
 
