@@ -48,6 +48,7 @@ public class FigureChecker : MonoBehaviour
                 else
                     InBetweenMerged?.Invoke(neighbor);
 
+                rotatedFigure.transform.rotation = neighbor.transform.rotation;
                 StartCoroutine(WaitToMerge(ParamsController.Figure.DelayMerging, neighbor, rotatedFigure));
                 
                 return;

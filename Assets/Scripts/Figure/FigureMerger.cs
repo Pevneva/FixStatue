@@ -9,8 +9,6 @@ public class FigureMerger : MonoBehaviour
     
     public void Merge(GameObject _baseFigures, GameObject _mergedFigure)
     {
-        _mergedFigure.transform.rotation = _baseFigures.transform.rotation;
-        
         foreach (var partWithCollider in _mergedFigure.transform.gameObject.GetComponentsInChildren<PartWithCollider>())
             partWithCollider.gameObject.transform.parent = _baseFigures.transform;
         
