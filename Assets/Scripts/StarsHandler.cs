@@ -53,8 +53,11 @@ public class StarsHandler : MonoBehaviour
         rectTransform.localPosition = localPointInRec;
         rectTransform.localScale = _scaleFactor * new Vector3(1, 1, 1);
         rectTransform.localRotation = Quaternion.Euler(rectTransform.localRotation.x, rectTransform.localRotation.y, rectTransform.localRotation.z + 10);
-        rectTransform.DOLocalMove(_target.localPosition, ParamsController.Star.FlyingTime);  
-        StartCoroutine(WaitBeforeDoPulse(ParamsController.Star.FlyingTime - 0.35f));
+        rectTransform.DOLocalMove(_target.localPosition, ParamsController.Star.FlyingTime).OnComplete(() =>
+        {
+            Destroy(star.gameObject);
+        });  
+        StartCoroutine(WaitBeforeDoPulse(ParamsController.Star.FlyingTime - 0.55f));
     }
 
     private IEnumerator WaitBeforeDoPulse(float delay)

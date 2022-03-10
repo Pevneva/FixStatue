@@ -10,6 +10,7 @@ public class StarAnimation : MonoBehaviour
     private readonly float _scaleKoef = 1.45f;
     private readonly float _increasingTime = 0.35f;
     private readonly float _decreasingTime = 0.25f;
+    private readonly int _pulsingAmount = 3;
     private RectTransform _rectTransform;
     private Vector2 _startSize;
     private Vector2 _increasedSize;
@@ -24,7 +25,7 @@ public class StarAnimation : MonoBehaviour
     public void DoPulse()
     {
         Sequence starAnimation = DOTween.Sequence();
-        starAnimation.Append(_rectTransform.DOSizeDelta(_increasedSize, _increasingTime)).SetEase(Ease.Flash);
-        starAnimation.Append(_rectTransform.DOSizeDelta(_startSize, _decreasingTime)).SetEase(Ease.Linear);
+        starAnimation.Append(_rectTransform.DOSizeDelta(_increasedSize, (_increasingTime)/_pulsingAmount)).SetEase(Ease.Flash).SetLoops(_pulsingAmount);
+        starAnimation.Append(_rectTransform.DOSizeDelta(_startSize, (_decreasingTime)/_pulsingAmount)).SetEase(Ease.Linear).SetLoops(_pulsingAmount);
     }
 }
