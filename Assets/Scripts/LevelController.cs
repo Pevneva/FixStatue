@@ -16,6 +16,8 @@ public class LevelController : MonoBehaviour
     [SerializeField] private RectTransform _starUiContainer;
     [SerializeField] private GameObject _confettiFx;
     [SerializeField] private WinTextDisplayer _winTextDisplayer;
+    [SerializeField] private AudioClip _winSound;
+    [SerializeField] private AudioSource _audioSource;
 
     private readonly float _delayBeforeNewLevel = 2;
     private Figure _currentFigure;
@@ -59,6 +61,8 @@ public class LevelController : MonoBehaviour
             _confettiFx.SetActive(true);
             animator.enabled = true;
             _winTextDisplayer.ShowRandomWinText();
+            _audioSource.clip = _winSound;
+            _audioSource.Play();
             _currentFigure.AddStars(_currentFigure.LevelReward, mergedPart);
             StartCoroutine(EndLevel(ParamsController.Level.DelayBeforeEndLevel));
         }
