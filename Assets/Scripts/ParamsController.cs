@@ -15,4 +15,9 @@ public static class ParamsController
     {
         public const float FlyingTime = 1.35f;
     }
+
+    public static class Level
+    {
+        public const float DelayBeforeEndLevel = 3;
+    }
 }

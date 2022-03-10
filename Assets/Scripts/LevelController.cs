@@ -15,9 +15,9 @@ public class LevelController : MonoBehaviour
     [SerializeField] private RectTransform _starIcon;
     [SerializeField] private RectTransform _starUiContainer;
     [SerializeField] private GameObject _confettiFx;
+    [SerializeField] private WinTextDisplayer _winTextDisplayer;
 
     private readonly float _delayBeforeNewLevel = 2;
-    private readonly float _delayBeforeEndLevel = 3f;
     private Figure _currentFigure;
     private int _currentIndex;
 
@@ -56,10 +56,11 @@ public class LevelController : MonoBehaviour
     {
         if (_currentIndex < _figureTemplates.Count - 1)
         {
-            _currentFigure.AddStars(_currentFigure.LevelReward, mergedPart);
-            animator.enabled = true;
-            StartCoroutine(EndLevel(_delayBeforeEndLevel));
             _confettiFx.SetActive(true);
+            animator.enabled = true;
+            _winTextDisplayer.ShowRandomWinText();
+            _currentFigure.AddStars(_currentFigure.LevelReward, mergedPart);
+            StartCoroutine(EndLevel(ParamsController.Level.DelayBeforeEndLevel));
         }
         else
         {
