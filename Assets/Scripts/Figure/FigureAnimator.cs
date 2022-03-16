@@ -13,7 +13,7 @@ public class FigureAnimator : MonoBehaviour
     public Animator WinAnimator => _winAnimator;
     
     private readonly float _offsetY = 3.5f;
-    private readonly float _miniOffsetY = 0.075f;
+    private readonly float _miniOffsetY = 0.0425f;
     private readonly float _scaleFactor = 1.25f;
     private FigureChecker _figureChecker;
 
@@ -30,7 +30,7 @@ public class FigureAnimator : MonoBehaviour
         animateFigure.Append(transform
             .DOMove(transform.position - new Vector3(0, _offsetY, 0), ParamsController.Figure.FallingTime)
             .SetEase(Ease.InQuad));
-        animateFigure.Append(transform.DOMove(transform.position - new Vector3(0, _offsetY + _miniOffsetY, 0),
+        animateFigure.Append(transform.DOMove(transform.position - new Vector3(0, _offsetY - _miniOffsetY, 0),
             ParamsController.Figure.ShakingTime / 2).SetEase(Ease.InBounce));
         animateFigure.Append(transform
             .DOMove(transform.position - new Vector3(0, _offsetY, 0), ParamsController.Figure.ShakingTime / 2)
@@ -57,7 +57,6 @@ public class FigureAnimator : MonoBehaviour
 
     private void PulsePartFigure(GameObject neighbor)
     {
-        Debug.Log("BBB PULSE !!! neighbor : " + neighbor);
         Sequence pulsing = DOTween.Sequence();
         pulsing.Append(neighbor.transform.DOMoveZ(neighbor.transform.position.z - 0.4f,
             ParamsController.Figure.DelayMerging / 2));

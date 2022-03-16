@@ -24,7 +24,7 @@ public class FigureRotater : MonoBehaviour
 
     private void OnEnable()
     {
-        _speed = 6;
+        _speed = 6f;
         _playerInput = GetComponent<PlayerInput>();
         _figureMerger = GetComponent<FigureMerger>();
         _partsWithColliders = GetComponentsInChildren<PartWithCollider>();

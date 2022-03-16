@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class PlayerInput : MonoBehaviour
 {
-    private readonly float _range = 50;
+    private readonly float _range = 15;
     private FigureRotater _figureRotater;
     private Vector2 _startPosition;
     private bool _isLeftDirection;
