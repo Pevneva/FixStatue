@@ -12,7 +12,7 @@ public class FigureChecker : MonoBehaviour
     private FigureRotater _figureRotater;
     private FigureMerger _figureMerger;
     private Animator _winAnimator;
-    private List<GameObject> _neighboringRotateParts; 
+    private List<GameObject> _neighboringRotateParts;
 
     public event UnityAction<GameObject, Animator> LevelCompleted;
     public event UnityAction<GameObject> InBetweenMerged;
@@ -35,10 +35,9 @@ public class FigureChecker : MonoBehaviour
 
     private void OnRotationEnded(GameObject rotatedFigure)
     {
-        var _neighbors = _neighboringRotateParts.Except(_neighboringRotateParts
-            .Where(p => p == rotatedFigure)).ToList();
+        var neighbors = GetNeighbors(rotatedFigure);
 
-        foreach (var neighbor in _neighbors)
+        foreach (var neighbor in neighbors)
         {
             var differenceAngle = Quaternion.Angle(rotatedFigure.transform.rotation, neighbor.transform.rotation);
             if (differenceAngle < _angleSpread)
@@ -50,16 +49,28 @@ public class FigureChecker : MonoBehaviour
 
                 rotatedFigure.transform.rotation = neighbor.transform.rotation;
                 StartCoroutine(WaitToMerge(ParamsController.Figure.DelayMerging, neighbor, rotatedFigure));
-                
+
                 return;
             }
         }
+    }
+
+    private List<GameObject> GetNeighbors(GameObject rotatedFigure)
+    {
+        var index = rotatedFigure.transform.GetSiblingIndex();
+        if (index == 0)
+            return new List<GameObject>() {_neighboringRotateParts[1]};
+
+        if (index == _neighboringRotateParts.Count - 1)
+            return new List<GameObject>() {_neighboringRotateParts[index - 1]};
+
+        return new List<GameObject>() {_neighboringRotateParts[index - 1], _neighboringRotateParts[index + 1]};
     }
 
     private IEnumerator WaitToMerge(float delay, GameObject neighbor, GameObject rotatedFigure)
     {
         yield return new WaitForSeconds(delay + Time.deltaTime);
         _figureMerger.Merge(neighbor, rotatedFigure);
-        _neighboringRotateParts.Remove(rotatedFigure);        
+        _neighboringRotateParts.Remove(rotatedFigure);
     }
 }
