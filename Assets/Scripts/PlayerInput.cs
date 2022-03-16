@@ -10,7 +10,6 @@ public class PlayerInput : MonoBehaviour
     private Vector2 _startPosition;
     private bool _isLeftDirection;
     private bool _isRightDirection;
-    private bool _isMouseMoving;
 
     public event UnityAction MouseUpped;
 
@@ -22,9 +21,6 @@ public class PlayerInput : MonoBehaviour
     private void FixedUpdate()
     {
         TrySetDirection();
-
-        // if (_isMouseMoving == false)
-        //     return;
 
         if (_isLeftDirection)
             _figureRotater.TryRotate(RotateDirection.LEFT);
@@ -66,7 +62,8 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             Vector2 currentMousePosition = Input.mousePosition;
-
+            ResetDirections();
+            
             if (Vector2.Distance(_startPosition, currentMousePosition) > _range)
             {
                 if (currentMousePosition.x - _startPosition.x > 0)

@@ -11,6 +11,7 @@ public class FigureRotater : MonoBehaviour
 
     private static int s_rotateCounter;
     private readonly float _autoRotateTime = 0.65f;
+    private readonly float _stepSmoothRotation = 0.15f;
     private float _angle;
     private Quaternion _startRotation;
     private Transform _partToRotate;
@@ -23,6 +24,7 @@ public class FigureRotater : MonoBehaviour
 
     private void OnEnable()
     {
+        _speed = 6;
         _playerInput = GetComponent<PlayerInput>();
         _figureMerger = GetComponent<FigureMerger>();
         _partsWithColliders = GetComponentsInChildren<PartWithCollider>();
@@ -56,9 +58,11 @@ public class FigureRotater : MonoBehaviour
 
         if (_removedParts.Contains(_partToRotate.gameObject))
             return;
-
-        _partToRotate.rotation = _startRotation * Quaternion.Euler(_partToRotate.rotation.x,
+        
+        Quaternion rotation = _startRotation * Quaternion.Euler(_partToRotate.rotation.x,
             _partToRotate.rotation.y + _angle, _partToRotate.rotation.z);
+        
+        _partToRotate.rotation = Quaternion.Lerp(_partToRotate.rotation, rotation, _stepSmoothRotation);
         _angle = direction == RotateDirection.LEFT ? _angle + _speed : _angle - _speed;
     }
 
