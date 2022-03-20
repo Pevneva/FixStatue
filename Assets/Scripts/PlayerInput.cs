@@ -10,16 +10,21 @@ public class PlayerInput : MonoBehaviour
     private Vector2 _startPosition;
     private bool _isLeftDirection;
     private bool _isRightDirection;
+    private bool _isBlockedRuling;
 
     public event UnityAction MouseUpped;
 
     private void OnEnable()
     {
         _figureRotater = GetComponent<FigureRotater>();
+        _isBlockedRuling = false;
     }
 
     private void FixedUpdate()
     {
+        if (_isBlockedRuling)
+            return;
+        
         TrySetDirection();
 
         if (_isLeftDirection)
@@ -30,6 +35,9 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
+        if (_isBlockedRuling)
+            return;
+        
         TrySaveStartData();
         TryResetStartData();
     }
@@ -48,7 +56,15 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             ResetStarData();
+            StartCoroutine(BlockTemporaryRuling(ParamsController.Figure.BackRotationTime + ParamsController.Figure.DelayMerging));
         }
+    }
+
+    private IEnumerator BlockTemporaryRuling(float time)
+    {
+        _isBlockedRuling = true;
+        yield return new WaitForSeconds(time);
+        _isBlockedRuling = false;
     }
 
     private void ResetStarData()

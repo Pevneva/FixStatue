@@ -12,8 +12,7 @@ public class FigureRotater : MonoBehaviour
     private static int s_rotateCounter;
     private readonly float _autoRotateTime = 0.65f;
     private readonly float _stepSmoothRotation = 0.15f;
-    private readonly float _backRotationTime = 0.5f;
-    private float _backRotationAngle = 15f;
+    private float _backRotationAngle = 5f;
     private float _angle;
     private Quaternion _startRotation;
     private Transform _partToRotate;
@@ -61,10 +60,10 @@ public class FigureRotater : MonoBehaviour
 
         if (_removedParts.Contains(_partToRotate.gameObject))
             return;
-        
+
         Quaternion rotation = _startRotation * Quaternion.Euler(_partToRotate.rotation.x,
             _partToRotate.rotation.y + _angle, _partToRotate.rotation.z);
-        
+
         _partToRotate.rotation = rotation;
         // _partToRotate.rotation = Quaternion.Lerp(_partToRotate.rotation, rotation, _stepSmoothRotation);
         _angle = direction == RotateDirection.LEFT ? _angle + _speed : _angle - _speed;
@@ -96,7 +95,7 @@ public class FigureRotater : MonoBehaviour
     {
         if (_partToRotate == null)
             return;
-        
+
         _angle = 0;
         _startRotation = _partToRotate.rotation;
         BackRotate();
@@ -106,16 +105,17 @@ public class FigureRotater : MonoBehaviour
     {
         Sequence backRotating = DOTween.Sequence();
         var angle = _rotateDirection == RotateDirection.LEFT ? -_backRotationAngle : _backRotationAngle;
-        
-        backRotating.Append(_partToRotate.DOLocalRotate(_partToRotate.rotation.eulerAngles + new Vector3(0,angle,0), _backRotationTime))
+        var backTime = ParamsController.Figure.BackRotationTime;
+        backRotating.Append(_partToRotate
+                .DOLocalRotate(_partToRotate.rotation.eulerAngles + new Vector3(0, angle, 0), 2 * backTime / 3))
             .SetEase(Ease.OutCirc);
-        backRotating.Append(_partToRotate.DOLocalRotate(_partToRotate.rotation.eulerAngles + new Vector3(0,angle/2,0), _backRotationTime/2))
+        backRotating.Append(_partToRotate
+                .DOLocalRotate(_partToRotate.rotation.eulerAngles + new Vector3(0, angle / 2, 0), backTime / 3))
             .SetEase(Ease.OutCirc);
         backRotating.OnComplete(() =>
         {
             RotationEnded?.Invoke(_partToRotate.gameObject);
         });
-
     }
 
     public void MixUpParts()

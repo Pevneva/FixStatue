@@ -8,7 +8,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(FigureRotater), typeof(FigureMerger))]
 public class FigureChecker : MonoBehaviour
 {
-    private readonly float _angleSpread = 5;
+    private readonly float _angleSpread = 3;
     private FigureRotater _figureRotater;
     private FigureMerger _figureMerger;
     private Animator _winAnimator;
@@ -46,8 +46,8 @@ public class FigureChecker : MonoBehaviour
                     LevelCompleted?.Invoke(neighbor, _winAnimator);
                 else
                     InBetweenMerged?.Invoke(neighbor);
-
                 rotatedFigure.transform.rotation = neighbor.transform.rotation;
+
                 StartCoroutine(WaitToMerge(ParamsController.Figure.DelayMerging, neighbor, rotatedFigure));
 
                 return;
