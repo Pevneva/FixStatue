@@ -1,16 +1,16 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(FigureRotater), typeof(FigureMerger))]
+[RequireComponent(typeof(FigureAnimator))]
 public class FigureChecker : MonoBehaviour
 {
     private readonly float _angleSpread = 3;
     private FigureRotater _figureRotater;
     private FigureMerger _figureMerger;
+    private FigureAnimator _figureAnimator;
     private Animator _winAnimator;
     private List<GameObject> _neighboringRotateParts;
 
@@ -21,9 +21,10 @@ public class FigureChecker : MonoBehaviour
     {
         _figureRotater = GetComponent<FigureRotater>();
         _figureMerger = GetComponent<FigureMerger>();
-        _winAnimator = GetComponent<FigureAnimator>().WinAnimator;
-        _figureRotater.RotationEnded += OnRotationEnded;
-
+        _figureAnimator = GetComponent<FigureAnimator>();
+        _winAnimator = _figureAnimator.WinAnimator;
+        _figureAnimator.BackRotationEnded += OnRotationEnded;
+        
         if (_neighboringRotateParts == null)
             _neighboringRotateParts = new List<GameObject>();
         else
@@ -49,7 +50,6 @@ public class FigureChecker : MonoBehaviour
                 rotatedFigure.transform.rotation = neighbor.transform.rotation;
 
                 StartCoroutine(WaitToMerge(ParamsController.Figure.DelayMerging, neighbor, rotatedFigure));
-
                 return;
             }
         }

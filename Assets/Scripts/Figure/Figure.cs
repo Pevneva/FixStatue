@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(FigureAnimator), typeof(FigureRotater))]
-[RequireComponent(typeof(FigureMerger),typeof(FigureChecker))]
+[RequireComponent(typeof(FigureMerger))]
 public class Figure : MonoBehaviour
 {
     [SerializeField] private int _subLevelReward;
@@ -12,8 +12,6 @@ public class Figure : MonoBehaviour
     private FigureAnimator _figureAnimator;
     private FigureRotater _figureRotater;
     private FigureMerger _figureMerger;
-    private FigureChecker _figureChecker;
-    private StarsHandler _starsHandler;
     private Player _player;
     private RectTransform _starIcon;
     private RectTransform _uiStarContainer;
@@ -22,13 +20,10 @@ public class Figure : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("On Enable Figure");
         _figureAnimator = GetComponent<FigureAnimator>();
         _figureRotater = GetComponent<FigureRotater>();
         _figureMerger = GetComponent<FigureMerger>();
-        _figureChecker = GetComponent<FigureChecker>();
-        _starsHandler = GetComponentInChildren<StarsHandler>();
-        
+
         _figureAnimator.Fall();
         StartCoroutine(StartMixing(ParamsController.Figure.FallingTime + ParamsController.Figure.ShakingTime + _delayBeforMixing));
     }

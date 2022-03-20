@@ -56,11 +56,11 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             ResetStarData();
-            StartCoroutine(BlockTemporaryRuling(ParamsController.Figure.BackRotationTime + ParamsController.Figure.DelayMerging));
+            StartCoroutine(BlockRuling(ParamsController.Figure.BackRotationTime + ParamsController.Figure.DelayMerging));
         }
     }
 
-    private IEnumerator BlockTemporaryRuling(float time)
+    private IEnumerator BlockRuling(float time)
     {
         _isBlockedRuling = true;
         yield return new WaitForSeconds(time);

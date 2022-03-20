@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class StarAnimation : MonoBehaviour
 {
-    private readonly float _scaleKoef = 1.45f;
+    private readonly float _scaleFactor = 1.45f;
     private readonly float _increasingTime = 0.35f;
     private readonly float _decreasingTime = 0.25f;
     private readonly int _pulsingAmount = 3;
@@ -19,7 +19,7 @@ public class StarAnimation : MonoBehaviour
     {
         _rectTransform = GetComponent<RectTransform>();
         _startSize = _rectTransform.sizeDelta;
-        _increasedSize = _startSize * _scaleKoef;
+        _increasedSize = _startSize * _scaleFactor;
     }
 
     public void DoPulse()

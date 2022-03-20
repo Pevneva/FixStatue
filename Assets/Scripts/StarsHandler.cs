@@ -11,6 +11,7 @@ public class StarsHandler : MonoBehaviour
     private ParticleSystem.Particle[] _particles = new ParticleSystem.Particle[10];
     private readonly float _scaleFactor = 1.15f;
     private readonly float _delayDestroying = 0.85f;
+    private readonly float _offsetTimeFlying = 0.55f;
     private int _count;
     private Vector3 _screenPosition;
     private RectTransform _parent;
@@ -57,7 +58,7 @@ public class StarsHandler : MonoBehaviour
         {
             Destroy(star.gameObject);
         });  
-        StartCoroutine(WaitBeforeDoPulse(ParamsController.Star.FlyingTime - 0.55f));
+        StartCoroutine(WaitBeforeDoPulse(ParamsController.Star.FlyingTime - _offsetTimeFlying));
     }
 
     private IEnumerator WaitBeforeDoPulse(float delay)

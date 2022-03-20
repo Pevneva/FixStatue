@@ -8,8 +8,7 @@ public class CursorShower : MonoBehaviour
 
     private void Start()
     {
-        //todo uncomment
-        // Cursor.visible = false; 
+        Cursor.visible = false; 
     }
 
     private void Update()

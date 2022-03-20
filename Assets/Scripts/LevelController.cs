@@ -30,10 +30,10 @@ public class LevelController : MonoBehaviour
         
         _currentIndex = 0;
         
-        ExecuteLevel(_currentIndex);
+        ExecuteLevel();
     }
 
-    private void ExecuteLevel(int index)
+    private void ExecuteLevel() 
     {
         _confettiFx.SetActive(false);
         InitRandomBackground();
@@ -76,6 +76,7 @@ public class LevelController : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         Destroy(_currentFigure.gameObject);
-        ExecuteLevel(++_currentIndex);       
+        _currentIndex++;
+        ExecuteLevel();       
     }
 }

@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(TMP_Text))]
@@ -25,7 +22,7 @@ public class WinTextDisplayer : MonoBehaviour
         _startPosition = transform.position;
         _startScale = transform.localScale;
         
-        var showingTime = 3 * ParamsController.Level.DelayBeforeEndLevel / 4;
+        var showingTime = 3 * ParamsController.Level.DelayBeforeEndLevel / 4; //AAA
         _winText.DOFade(0, 0);
         _winText.DOFade(1, ParamsController.Level.DelayBeforeEndLevel / 2);
         _winText.transform.DOMoveY(transform.position.y + posiitionYFactor, 3 * showingTime / 4);

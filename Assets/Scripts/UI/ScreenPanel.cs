@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +5,6 @@ public class ScreenPanel : MonoBehaviour
 {
     [SerializeField] private TMP_Text _starAmount;
     [SerializeField] private Player _player;
-    [SerializeField] private RectTransform _targetStarImage;
 
     private float _countTime = 2.1f;
     private bool _isCounting;
@@ -16,8 +12,7 @@ public class ScreenPanel : MonoBehaviour
     private int _addedStars;
     private float _tempAddedStars;
     private float _interpolationValue = 0.0f;
-
-    public RectTransform TargetStarImage => _targetStarImage;
+    private float _interpolationSpeed = 1.5f;
     
     private void Start()
     {
@@ -51,7 +46,7 @@ public class ScreenPanel : MonoBehaviour
             _tempAddedStars = Mathf.Lerp(_tempAddedStars, _startStars + _addedStars, _interpolationValue);
             _starAmount.text = Mathf.Round(_tempAddedStars).ToString();
 
-            _interpolationValue += 1.5f * Time.deltaTime;
+            _interpolationValue += _interpolationSpeed * Time.deltaTime;  
 
             if (Mathf.Round(_tempAddedStars) == _startStars + _addedStars)
             {
