@@ -25,7 +25,7 @@ public class Figure : MonoBehaviour
         _figureMerger = GetComponent<FigureMerger>();
 
         _figureAnimator.Fall();
-        StartCoroutine(StartMixing(ParamsController.Figure.FallingTime + ParamsController.Figure.ShakingTime + _delayBeforMixing));
+        StartCoroutine(StartMixing(ParamsController.Figure.FallingTime + _delayBeforMixing));
     }
 
     public void Init(Player player, RectTransform starIcon, RectTransform uiStarContainer)

@@ -876,7 +876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 786666762}
   _figureTemplates:
-  - {fileID: 7326316758017318470, guid: b890179802de137489c978e7ff54d973, type: 3}
+  - {fileID: 2644955469526372991, guid: 369fbd69310c86641a3a157f672a69c9, type: 3}
   - {fileID: 2644955469526372991, guid: 369fbd69310c86641a3a157f672a69c9, type: 3}
   - {fileID: 5216747599385263139, guid: 7998abf8eb1dd3b469a338cc7cd7310a, type: 3}
   - {fileID: 7326316758017318470, guid: b890179802de137489c978e7ff54d973, type: 3}

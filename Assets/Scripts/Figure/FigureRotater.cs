@@ -8,8 +8,10 @@ using Random = UnityEngine.Random;
 public class FigureRotater : MonoBehaviour
 {
     private readonly float _speed = 6f;
+    private readonly float _maxRandomAngle = 110f;
+    private readonly float _minRandomAngle = 10f;
     private static int s_rotateCounter;
-    private readonly float _autoRotateTime = 0.65f;
+    private readonly float _autoRotateTime = 0.95f;
     private float _backRotationAngle = 5f;
     private float _angle;
     private Quaternion _startRotation;
@@ -93,10 +95,10 @@ public class FigureRotater : MonoBehaviour
 
     private void RandomRotate(Transform partToRotate)
     {
-        var angle = s_rotateCounter % 2 == 0 ? Random.Range(-90, 0) : Random.Range(0, 90);
+        var angle = s_rotateCounter % 2 == 0 ? Random.Range(-_maxRandomAngle, -_minRandomAngle) : Random.Range(_minRandomAngle, _maxRandomAngle);
         s_rotateCounter++;
 
         partToRotate.DORotate(new Vector3(partToRotate.rotation.x,
-            partToRotate.rotation.y + angle, partToRotate.rotation.z), _autoRotateTime);
+            partToRotate.rotation.y + angle, partToRotate.rotation.z), _autoRotateTime).SetEase(Ease.Linear);
     }
 }
