@@ -7,10 +7,9 @@ using Random = UnityEngine.Random;
 
 public class FigureRotater : MonoBehaviour
 {
-    private float _speed = 3f;
+    private readonly float _speed = 6f;
     private static int s_rotateCounter;
     private readonly float _autoRotateTime = 0.65f;
-    private readonly float _stepSmoothRotation = 0.15f;
     private float _backRotationAngle = 5f;
     private float _angle;
     private Quaternion _startRotation;
@@ -24,7 +23,6 @@ public class FigureRotater : MonoBehaviour
     
     private void OnEnable()
     {
-        _speed = 6f;
         _playerInput = GetComponent<PlayerInput>();
         _figureMerger = GetComponent<FigureMerger>();
         _figureAnimator = GetComponent<FigureAnimator>();
@@ -67,9 +65,9 @@ public class FigureRotater : MonoBehaviour
         _startRotation = _partToRotate.rotation;
     }
 
-    public Transform GetParent(Transform transform)
+    public Transform GetParent(Transform transformChild)
     {
-        return transform.parent.gameObject.transform;
+        return transformChild.parent.gameObject.transform;
     }
 
     private void OnMouseUpped()

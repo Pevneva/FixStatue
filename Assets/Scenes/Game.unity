@@ -876,7 +876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 786666762}
   _figureTemplates:
-  - {fileID: 5649730843062835620, guid: 7e3952ef3811c464698cda6a26322a1e, type: 3}
+  - {fileID: 7326316758017318470, guid: b890179802de137489c978e7ff54d973, type: 3}
   - {fileID: 2644955469526372991, guid: 369fbd69310c86641a3a157f672a69c9, type: 3}
   - {fileID: 5216747599385263139, guid: 7998abf8eb1dd3b469a338cc7cd7310a, type: 3}
   - {fileID: 7326316758017318470, guid: b890179802de137489c978e7ff54d973, type: 3}
@@ -1324,6 +1324,7 @@ GameObject:
   - component: {fileID: 579061777}
   - component: {fileID: 579061776}
   - component: {fileID: 579061775}
+  - component: {fileID: 579061780}
   m_Layer: 0
   m_Name: Rocket (3)
   m_TagString: Untagged
@@ -1379,7 +1380,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2db75ed3f995e34ebc6d3ae0eb17b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
 --- !u!4 &579061779
 Transform:
   m_ObjectHideFlags: 0
@@ -1397,6 +1397,20 @@ Transform:
   m_Father: {fileID: 655149397}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &579061780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579061774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516b001418c601645b4e8e4907f13308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flyingStarsFx: {fileID: 0}
+  _winAnimator: {fileID: 0}
 --- !u!1 &579312423
 GameObject:
   m_ObjectHideFlags: 0
@@ -6990,6 +7004,7 @@ GameObject:
   - component: {fileID: 1008527467}
   - component: {fileID: 1008527466}
   - component: {fileID: 1008527465}
+  - component: {fileID: 1008527469}
   m_Layer: 0
   m_Name: Rocket (2)
   m_TagString: Untagged
@@ -7062,7 +7077,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2db75ed3f995e34ebc6d3ae0eb17b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+--- !u!114 &1008527469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008527463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516b001418c601645b4e8e4907f13308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flyingStarsFx: {fileID: 0}
+  _winAnimator: {fileID: 0}
 --- !u!1 &1022364339
 GameObject:
   m_ObjectHideFlags: 0
@@ -12338,6 +12366,7 @@ GameObject:
   - component: {fileID: 1347742922}
   - component: {fileID: 1347742921}
   - component: {fileID: 1347742920}
+  - component: {fileID: 1347742924}
   m_Layer: 0
   m_Name: Rocket (1)
   m_TagString: Untagged
@@ -12410,7 +12439,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2db75ed3f995e34ebc6d3ae0eb17b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+--- !u!114 &1347742924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347742918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516b001418c601645b4e8e4907f13308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flyingStarsFx: {fileID: 0}
+  _winAnimator: {fileID: 0}
 --- !u!1 &1384878794
 GameObject:
   m_ObjectHideFlags: 0
@@ -13028,7 +13070,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _starAmount: {fileID: 14938979}
   _player: {fileID: 786666762}
-  _targetStarImage: {fileID: 0}
 --- !u!1 &1948324028
 GameObject:
   m_ObjectHideFlags: 0
@@ -27621,6 +27662,7 @@ GameObject:
   - component: {fileID: 6372256241693950916}
   - component: {fileID: 6372256241693950919}
   - component: {fileID: 6372256241693950918}
+  - component: {fileID: 6372256241693950920}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Untagged
@@ -27652,7 +27694,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2db75ed3f995e34ebc6d3ae0eb17b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
 --- !u!114 &6372256241693950918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27677,6 +27718,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d22044fac500ad547ad4fa6f3def057b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6372256241693950920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6372256241693950915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516b001418c601645b4e8e4907f13308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flyingStarsFx: {fileID: 0}
+  _winAnimator: {fileID: 0}
 --- !u!1001 &7129506808370334047
 PrefabInstance:
   m_ObjectHideFlags: 0
